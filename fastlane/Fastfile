@@ -36,3 +36,24 @@ platform :android do
     upload_to_play_store
   end
 end
+
+
+platform :android do
+    desc "AppDistribution"
+    lane :distribute do
+        gradle(task: "clean")
+
+        gradle(
+            task: "assemble",
+            build_type: "Debug",
+            flags: "--stacktrace"
+        )
+
+        firebase_app_distribution(
+            app: "1:123456789:ios:abcd1234",
+            firebase_cli_token: "1//abcde12345",
+            testers: "tester1@company.com, tester2@company.com",
+            release_notes: "success"
+        )
+    end
+end
